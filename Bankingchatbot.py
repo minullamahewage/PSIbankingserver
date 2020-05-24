@@ -401,5 +401,3 @@ def response(messageText, userId):
     
     except :
         return "Error has occured with the Banking server. Sorry about that!"
-    
-print(response('hi',1))
