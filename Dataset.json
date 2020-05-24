@@ -1,0 +1,89 @@
+{"intents": [
+        {"tag": "greeting",
+            "patterns": ["Hi there", "Is anyone there?", "Hello", "Good day","hey","i need help"],
+            "responses": ["Hello", "Good to see you", "Hi there, how can I help?"]
+        },
+        {"tag": "goodbye",
+            "patterns": ["Bye", "See you later", "Goodbye", "Nice chatting to you, bye", "Till next time"],
+            "responses": ["See you!", "Have a nice day", "Bye! Come back again soon.","Great chatting with you"]
+        },
+        {"tag": "thanks",
+            "patterns": ["Thanks", "Thank you", "That's helpful", "Awesome, thanks", "Thanks for helping me","have a nice day","take care","nice to talk with you"],
+            "responses": ["Happy to help!", "Any time!", "Thank you!"]
+        },
+        {"tag": "no",
+            "patterns": ["no","don't know", "nothing","negative","absolutely not","of course not","nope","nah","not at all","not really"],
+            "responses": ["that's fine !"]
+        },
+        {"tag": "okay",
+            "patterns": ["ok","fine", "well","welcome","happy about that","yeah","sure","okay"],
+            "responses": ["Is there anything to help with ?"]
+        }, 
+        {"tag": "select",
+            "patterns": ["choose","pick", "take","got approvel","satisfied","accept","select","agree"],
+            "responses": ["let's move forward", "we can carry on..","you are right! Lets continue.."]
+        },
+        {"tag": "quit",
+            "patterns": ["stop","stop process", "quit","i want to leave the process","ignore","flee","postpone"],
+            "responses": ["okay! Is there anything to help with ?"]
+        },
+        {"tag": "noanswer",
+            "patterns": ["hjjahjhsjhja","sjashjahsjhjahjshjahj","what is the process to change the room","what is the day toady?","what is the radius of sun?"],
+            "responses": ["Sorry, can't understand you", "Not sure I understand"]
+        },
+        {"tag": "options",
+            "patterns": ["How you could help me?", "What you can do?", "What help you provide?", "How you can be helpful?", "What support is offered","which kind of services do you have"],
+            "responses": ["I can guide you to do money transferring, online bill payments, show your account details as well as report a complaint", "Offering support for do money transferring, online bill payments, show your account details as well as report a complaint"]
+        },
+		{"tag": "history",
+            "patterns": ["open transcation history", "show account history", "view my transations","open deposit informations", "show transaction details"],
+            "responses": ["No problem, here is your account transaction history\n"]
+        },
+        {"tag": "balance",
+            "patterns": ["can you check my balance", "can you tell me how much is on my account", "view account balance","balance of my account", "my assets", "can you check my assets", "show updates about account asserts"],
+            "responses": ["Sure, Total account asset is ","Total available balance is "]
+        },
+		{"tag": "personal",
+            "patterns": ["account details","open my account details","open my informations","show my profile","profile", "show personal information"],
+            "responses": ["Here's your profile..", "Okay, Sure\n"]
+        },
+        {"tag": "name",
+            "patterns": ["name", "my name","what is my name ?", "tell my name", "my username", "username", "what is my username ?","what is my account username ?"],
+            "responses": ["Sure, your name is ", "Well, Your name is "]
+        },
+        {"tag": "account",
+            "patterns": ["account number","what is my account number ?", "tell my account number"],
+            "responses": ["Sure, Your account is ", "Well, Your account is "]
+        },
+        {"tag": "transfer",
+            "patterns": ["I want to make money transfer", "Money trasfer", "send money to friend", "share money with friend", "share money", "send money"],
+            "responses": ["So, Let me guide you the money transferring to be easier"]
+        },
+        {
+        "tag": "payment",
+            "patterns": ["I want to pay a bill", "bill", "bill payment", "make bill payement"],
+            "responses": ["Okay, Let me guide you for your bill payment to be easier..\nChoose the biller catagory\n1. Electricity\n3. Insuarance\n4. Telephone\n5. Television\n6. Water"]
+        },
+        {
+        "tag": "complain_behaviour",
+            "patterns": ["complain about behaviour", "want to report about unethical behaviour", "complain for behaviour about service providers", "complain for behaviour about agents","complain for service providers","complain for agents","want to report against agents or service providers"],
+            "responses": ["okay !.Which branch do you want to complain ?"]
+        },
+        {
+        "tag": "complain_management",
+            "patterns": ["complain about account management", "report about account management", "account management", "management","want to report about banking management"],
+            "responses": ["okay !.Which branch do you want to complain ?"]
+        },
+        {
+        "tag": "complain_facility",
+            "patterns": ["facility", "less conditions", "low facilility", "complain about low facility","report about service low facility","complain about less conditions","want to complain about conditions of bank"],
+            "responses": ["okay !.Which branch do you want to complain ?"]
+        },
+        {
+        "tag": "complain_wasting",
+            "patterns": ["report for wasting time", "lazy", " complain about time wasting", "complain about efficiency not enough","efficiency","complain about less efficiency service","report about lazy service","want to complain about wasting time","starving"],
+            "responses": ["okay !.Which branch do you want to complain ?"]
+        }
+
+   ]
+}
