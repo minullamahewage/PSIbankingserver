@@ -1,3 +1,16 @@
 {
-    "python.pythonPath": "D:\\semester 5\\software engineering project\\bankserver\\bankserver_env\\Scripts"
+    "python.pythonPath": "D:\\semester 5\\software engineering project\\bankserver\\bankenv\\Scripts\\python",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true,
+    "python.autoComplete.extraPaths": [
+    
+    ]
 }
