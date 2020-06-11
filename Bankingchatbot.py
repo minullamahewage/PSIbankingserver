@@ -352,19 +352,19 @@ def response(messageText, userId):
         if tag == 'transfer':
             if package_management.checkjoin(userId):
                 context[userId] = {'model':'transfer'}
-                return get_response(tag) +"\nPlease enter the beneficiary's account number"
+                return get_response(tag) +"\nPlease enter the beneficiary's account number\n\nYou may enter 'quit' to exit out of any ongoing action."
             
 
         elif tag == 'payment':
             if package_management.checkjoin(userId):
                 context[userId] = {'model':'payment'}
-                return get_response(tag)
+                return get_response(tag) + "\n\nYou may enter 'quit' to exit out of any ongoing action."
         
 
         elif tag in ['complain_behaviour','complain_management','complain_facility','complain_wasting']:
             if package_management.checkjoin(userId):
                 context[userId] = {'model':'complain', 'type': tag}
-                return get_response(tag)
+                return get_response(tag) + "\n\nYou may enter 'quit' to exit out of any ongoing action."
 
 
         elif tag == 'history':
