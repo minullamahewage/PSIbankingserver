@@ -196,6 +196,9 @@ def moneytrasferprocess(messageText, userId):
             del context[userId]
         elif repindx == 2:
             del context[userId]['number'], context[userId]['name']
+
+    if reply == "Error has occured with the Banking server. Sorry about that!":
+        del context[userId]
     return reply
 
 #build bill payment process
@@ -241,7 +244,7 @@ def paymentprocess(messageText, userId):
         code = extractor.getNumber(pos)
         if int(code) != context[userId]['code']: 
             return "Verification key is invalid. Please re-enter it"
-
+    # print(context[userId])
     boolean,reply,repindx = package_management.dopayment(userId,context[userId])
 
     if boolean:
@@ -253,6 +256,9 @@ def paymentprocess(messageText, userId):
             del context[userId]['field']
         elif repindx == 4:
             del context[userId]['name'], context[userId]['address']
+    print(reply)
+    if reply == "Error has occured with the Banking server. Sorry about that!":
+        del context[userId]
     return reply
 
 # build complaint process
@@ -277,6 +283,9 @@ def complainprocess(messageText, userId):
             del context[userId]
         elif repindx == 2:
             del context[userId]['branch']
+    
+    if reply == "Error has occured with the Banking server. Sorry about that!":
+        del context[userId]
     return reply
 
 #connect user account and bank account together
@@ -308,6 +317,9 @@ def joinaccprocess(messageText, userId):
             del context[userId]
         if repindx == 2:
             del context[userId]['number'], context[userId]['name'], context[userId]['nic']
+    
+    if reply == "Error has occured with the Banking server. Sorry about that!":
+        del context[userId]
     return reply
 
 # chatbot conversation
@@ -359,10 +371,10 @@ def response(messageText, userId):
             if package_management.checkjoin(userId):
                 data = package_management.getTransactions(userId)
                 # print(data)
-                message = "{:<22}".format("Date") +"   "+"{:<30}".format("Description")+"   "+"{:<10}".format("Debit")+"   "+"{:<10}".format("Credit")+"   "+"{:<10}".format("Balance")+"\n"
+                message = "Date".ljust(40) + "Debit".ljust(20) + "Credit".ljust(20) + "Balance".ljust(20) + "Description".ljust(40) + "\n\n"
                 for i in range(len(data)):
-                    message += "{:<22}".format(data[i]['date'].strftime("%d-%b-%Y (%H:%M:%S)")) +"   "+"{:<30}".format(data[i]['description'][:30])+"   "+"{:<10}".format(str(data[i]['debit']))+"   "+"{:<10}".format(str(data[i]['credit']))+"   "+"{:<10}".format(str(data[i]['balance']))+"\n"
-                # print(message)
+                    message += str(data[i]['date'].strftime("%d-%b-%Y (%H:%M:%S)")).ljust(30) + str(data[i]['debit']).ljust(20) + str(data[i]['credit']).ljust(20) + str(data[i]['balance']).ljust(20) + str(data[i]['description'][:40]).ljust(40) +"\n"
+                print(message)
                 return get_response(tag) + message
 
 

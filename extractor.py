@@ -32,5 +32,5 @@ def extract_preparation(message):
 
 
 
-# # print(getName(extract_preparation("name is Rashmika Lakshan")))
+# print(getName(extract_preparation("name is N.G.L.R.Lakshan")))
 # print(getName(extract_preparation("name is Kumara Jayasinhga")))
