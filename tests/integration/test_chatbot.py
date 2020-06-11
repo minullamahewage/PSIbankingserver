@@ -1,10 +1,10 @@
 import sys
+from unittest import TestCase
 sys.path.append('./')
-
-import unittest
 import Bankingchatbot
 
-class TestBankingChatbot(unittest.TestCase):
+
+class TestBankingChatbot(TestCase):
 
     def test_response(self): 
         self.assertIn(Bankingchatbot.response('hi',1),["Hello", "Good to see you", "Hi there, how can I help?"])
@@ -205,7 +205,3 @@ class TestBankingChatbot(unittest.TestCase):
         self.assertNotEqual(Bankingchatbot.get_results('find a job')[0][0],'complain_management')
         self.assertNotEqual(Bankingchatbot.get_results('how can i login to the system')[0][0],'complain_facility')
         self.assertNotEqual(Bankingchatbot.get_results('dagadgg')[0][0],'complain_wasting')
-
-
-if __name__ == '__main__':
-    unittest.main()

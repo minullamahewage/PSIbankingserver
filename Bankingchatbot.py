@@ -154,7 +154,7 @@ context = {}
 def extract_preparation(message):  
     items = nltk.word_tokenize(message)
     sent = nltk.pos_tag(items)
-    print(sent)
+    # print(sent)
     return sent
 
 #build money transfer process
@@ -215,7 +215,7 @@ def paymentprocess(messageText, userId):
     
     elif 'name' not in context[userId]:
         pos = extract_preparation(messageText)
-        print(pos)
+        # print(pos)
         name = extractor.getName(pos)
         context[userId]['name'] = name
         return "What is consumer's address ?"
@@ -289,7 +289,7 @@ def joinaccprocess(messageText, userId):
 
     elif 'name' not in context[userId]:
         pos = extract_preparation(messageText)
-        print(pos)
+        # print(pos)
         name = extractor.getName(pos)
         context[userId]['name'] = name
         return "What is your NIC ?" 
@@ -298,7 +298,7 @@ def joinaccprocess(messageText, userId):
         pos = extract_preparation(messageText)
         nic = extractor.getNumber(pos)
         context[userId]['nic'] = nic
-    print(context[userId])
+    # print(context[userId])
     boolean,reply,repindx = package_management.loginaccount(userId,context[userId])
     
     if boolean:
@@ -315,7 +315,7 @@ def response(messageText, userId):
     # print(messageText, userId)
     try:
         tag = get_results(messageText)[0][0] #classify the message and get tag
-        print(tag)
+        # print(tag)
         if userId in  context:
             if  tag != 'quit':
                 if context[userId]['model'] == 'transfer':
@@ -362,14 +362,14 @@ def response(messageText, userId):
                 message = "{:<22}".format("Date") +"   "+"{:<30}".format("Description")+"   "+"{:<10}".format("Debit")+"   "+"{:<10}".format("Credit")+"   "+"{:<10}".format("Balance")+"\n"
                 for i in range(len(data)):
                     message += "{:<22}".format(data[i]['date'].strftime("%d-%b-%Y (%H:%M:%S)")) +"   "+"{:<30}".format(data[i]['description'][:30])+"   "+"{:<10}".format(str(data[i]['debit']))+"   "+"{:<10}".format(str(data[i]['credit']))+"   "+"{:<10}".format(str(data[i]['balance']))+"\n"
-                print(message)
+                # print(message)
                 return get_response(tag) + message
 
 
         elif tag == 'balance':
             if package_management.checkjoin(userId):
                 balance = package_management.getAccBalance(userId)
-                print(balance)
+                # print(balance)
                 return get_response(tag) + str(balance)
 
 

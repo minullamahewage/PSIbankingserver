@@ -3,7 +3,7 @@ import datetime
 
 def checkjoin(userId):
     data = db_read("""SELECT `accno` FROM joinaccounts WHERE `user_id` = %s""",(userId,))
-    print(data)
+    # print(data)
     if data:
         return True
     return False
@@ -20,17 +20,17 @@ def loginaccount(userId,regdata):
 
 def getname(userId):
     data = db_read("""SELECT `name` FROM accountdet NATURAL JOIN joinaccounts WHERE `user_id` = %s""", (userId,))
-    print(data[0]['name'])
+    # print(data[0]['name'])
     return data[0]['name']
 
 def getpersonal(userId):
     data = db_read("""SELECT `first_name`, `email`, `name`, `accno`, `nic`, `branch` FROM users NATURAL JOIN joinaccounts JOIN accountdet USING (`accno`) WHERE `user_id` = %s""", (userId,))
-    print(data[0])
+    # print(data[0])
     return data[0]
     
 def getAccBalance(userId):
     data = db_read("""SELECT `balance` FROM transactions NATURAL JOIN accountdet JOIN joinaccounts USING (`accno`) JOIN users USING (`user_id`) WHERE `user_id` = %s ORDER BY `date` DESC LIMIT 1""", (userId,))
-    print(data[0]['balance'])
+    # print(data[0]['balance'])
     return data[0]['balance']
     
 def getTransactions(userId):
@@ -57,10 +57,10 @@ def dopayment(userId,paydata):
     if data1:
         data2 = db_read("""SELECT accno FROM fields WHERE fieldname = %s""", (paydata['field'],))
         if data2 and str(data2[0]['accno']) == str(paydata['number']):
-            print(data1)
+            # print(data1)
             consumernic = data1[0]['nic']
             fieldaccno = data2[0]['accno']
-            print(consumernic, fieldaccno)
+            # print(consumernic, fieldaccno)
 
             data3 = db_read("""SELECT `balance` FROM billpaymenttransactions WHERE `accno` = %s AND nic = %s ORDER BY `date` DESC LIMIT 1""", (fieldaccno, consumernic))
             if data3:
@@ -99,12 +99,12 @@ def reportcomplain(complaindet):
         return False, "Error has occured with the Banking server. Sorry about that!", 1
     return False, "There is a no such branch in our service. Please enter the branch name", 2
 
-# getTransactions(3)
+# print(getTransactions(3))
 # print(getpersonal('1'))
-# print(dopayment(3,{'model': 'payment', 'field': 'Electricity', 'number': 11111, 'name': "K.W.Saranga", 'address': '170/A, dobagahawatta, norway', 'amount': 200.0, 'code': 182172}))
-# print(reportcomplain({'model':'complain', 'type':'complain_wasting', 'branch':'gae', 'description':'billing counter accountant is not familiar with people'}))
-# print(dotransfer(3,{'model': 'transfer', 'number': 121, 'name': 'lklk', 'amount': 23.0, 'code': 431435}))
+# print(dopayment(1,{'model': 'payment', 'field': 'Electricity', 'number': 11111, 'name': "K.W.Saranga", 'address': '170/A, dobagahawatta, norway', 'amount': 200.0, 'code': 182172}))
+# print(reportcomplain({'model':'complain', 'type':'complain_wasting', 'branch':'galle', 'description':'billing counter accountant is not familiar with people'}))
+# print(dotransfer(1,{'model': 'transfer', 'number': 456123789, 'name': 'Jorge Washinton', 'amount': 500.0, 'code': 431435}))
 # print(loginaccount(5,{'number':'895623125','name':'S.C.Dhavinchi','nic':'5588124722V'}))
 # print(checkjoin('6 or 1=1'))
-# print(getAccBalance(5))
+# print(getAccBalance(2))
 # print(getname("sadakan OR 1=1"))

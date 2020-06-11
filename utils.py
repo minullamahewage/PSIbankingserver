@@ -1,46 +1,90 @@
-from settings import JWT_SECRET_KEY
+import mysql.connector
+from mysql.connector import errorcode
 from flask_mysqldb import MySQLdb
 from hashlib import pbkdf2_hmac
-
-from database.database import db
-
 import os
 import jwt
 
+from database.database import db
+from settings import JWT_SECRET_KEY, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB, MYSQL_HOST
+
+config = {
+    'host': MYSQL_HOST,
+    'user': MYSQL_USER,
+    'password': MYSQL_PASSWORD,
+    'database': MYSQL_DB
+}
+
 
 def db_read(query, params=None):
-    # cursor = db.connection.cursor()
-    cursor = db.cursor(dictionary=True)
-    if params:
-        cursor.execute(query, params)
-    else:
-        cursor.execute(query)
-
-    entries = cursor.fetchall()
-    cursor.close()
-
-    content = []
-
-    for entry in entries:
-        content.append(entry)
-
-    return content
-
-
-def db_write(query, params):
-    # cursor = db.connection.cursor()
-    cursor = db.cursor(dictionary=True)
     try:
-        cursor.execute(query, params)
-        # db.connection.commit()
-        db.commit()
-        cursor.close()
+        print(config["database"])
+        cnx = mysql.connector.connect(**config)
+        cursor = cnx.cursor(dictionary=True)
+        if params:
+            cursor.execute(query, params)
+        else:
+            cursor.execute(query)
 
-        return True
-
-    except MySQLdb._exceptions.IntegrityError:
+        entries = cursor.fetchall()
         cursor.close()
+        cnx.close()
+
+        content = []
+
+        for entry in entries:
+            content.append(entry)
+
+        return content
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("User authorization error")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database doesn't exist")
+        else:
+            print(err)
+    else:
+        cnx.close()
+    finally:
+        if cnx.is_connected():
+            cursor.close()
+            cnx.close()
+            print("Connection closed")
+
+
+def db_write(query, params=None):
+    try:
+        cnx = mysql.connector.connect(**config)
+        cursor = cnx.cursor(dictionary=True)
+        try:
+            cursor.execute(query, params)
+            cnx.commit()
+            cursor.close()
+            cnx.close()
+            return True
+
+        except MySQLdb._exceptions.IntegrityError:
+            cursor.close()
+            cnx.close()
+            return False
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("User authorization error")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database doesn't exist")
+        else:
+            print(err)
         return False
+    else:
+        cnx.close()
+        return False
+    finally:
+        if cnx.is_connected():
+            cursor.close()
+            cnx.close()
+            print("Connection closed")
 
 
 def generate_salt():
@@ -91,9 +135,34 @@ def validate_user(email, password):
                 "last_name": last_name,
                 "email": user_email
                 })
-            return jwt_token
+            return jwt_token, ""
         else:
-            return False
+            return False, "password"
+
+    else:
+        return False, "email"
+
+
+def write_message(id, user_id, message, is_bot,date_time):
+    if db_write("""INSERT into `banking_chatbot_messages` (`id`, `user_id`, `message`, `isBot`, `date_time`) VALUES (%s, %s, %s, %s,%s)""", 
+    (id, user_id, message, is_bot, date_time),
+    ):
+        print("Successfully written to db")
+        return True
 
     else:
         return False
+
+
+def get_user_messages(user_id):
+    messages = db_read("""SELECT * FROM
+                        (SELECT * FROM `banking_chatbot_messages` WHERE `user_id` = %s ORDER BY `id` DESC LIMIT 20)
+                        sub ORDER BY `id` ASC""", (user_id,))
+    for message in messages:
+        if message["isBot"] == 0:
+            message["isBot"] = False
+        elif message["isBot"] == 1:
+            message["isBot"] = True
+    messages_dict = {"messages": messages}
+    return messages_dict
+
