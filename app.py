@@ -38,7 +38,7 @@ def chatbotReply():
     # context = message['context']
 
     # if not userId in context.keys():
-    #     chatbot.context[userId]=""
+    #     chatbot.context[userId]=''
     # while userId not in context.keys():
     #     pass
     # reply, context = chatbot.response(messageText, userId, context)
